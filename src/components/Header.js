@@ -5,7 +5,9 @@ export default function Header() {
   return (
     <div className="header">
       <img className="logo" src="logo.png" alt="moviedux" />
-      <p>lorem ipsum</p>
+      <div>
+        <h2>It's time for popcorn! Find your next movie Here.</h2>
+      </div>
     </div>
   );
 }
