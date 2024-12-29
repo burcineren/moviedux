@@ -52,6 +52,7 @@ function App() {
               path="/watchlist"
               element={
                 <Watchlist
+                  movies={movies}
                   watchlist={watchlist}
                   toggleWatchlist={toggleWatchlist}
                 />

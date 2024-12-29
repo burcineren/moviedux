@@ -2,48 +2,54 @@ import React, { useState } from "react";
 import "../styles.css";
 import MovieCard from "./MovieCard";
 
-export default function MoviesGrid({
-  movies,
-  watchlist,
-  toggleWatchlist,
-  isWatchlisted,
-}) {
+export default function MoviesGrid({ movies, watchlist, toggleWatchlist }) {
   const [searchTerm, setSearchTerm] = useState("");
-  const [genre, setGenres] = useState("All Genres");
+
+  const [genre, setGenre] = useState("All Genres");
   const [rating, setRating] = useState("All");
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };
-  const handleGentreChange = (e) => {
-    setGenres(e.target.value);
+
+  const handleGenreChange = (e) => {
+    setGenre(e.target.value);
   };
+
   const handleRatingChange = (e) => {
     setRating(e.target.value);
   };
+
   const matchesGenre = (movie, genre) => {
     return (
       genre === "All Genres" ||
       movie.genre.toLowerCase() === genre.toLowerCase()
     );
   };
+
   const matchesSearchTerm = (movie, searchTerm) => {
     return movie.title.toLowerCase().includes(searchTerm.toLowerCase());
   };
+
   const matchesRating = (movie, rating) => {
     switch (rating) {
       case "All":
         return true;
+
       case "Good":
         return movie.rating >= 8;
+
       case "Ok":
         return movie.rating >= 5 && movie.rating < 8;
+
       case "Bad":
         return movie.rating < 5;
+
       default:
         return false;
     }
   };
+
   const filteredMovies = movies.filter(
     (movie) =>
       matchesGenre(movie, genre) &&
@@ -55,47 +61,50 @@ export default function MoviesGrid({
     <div>
       <input
         type="text"
-        placeholder="Search movies..."
         className="search-input"
+        placeholder="Search movies..."
         value={searchTerm}
         onChange={handleSearchChange}
       />
+
       <div className="filter-bar">
         <div className="filter-slot">
-          <label>Genre:</label>
+          <label>Genre</label>
           <select
-            value={genre}
             className="filter-dropdown"
-            onChange={handleGentreChange}
+            value={genre}
+            onChange={handleGenreChange}
           >
-            <option value="All Genres">All Genres</option>
-            <option value="Action">Action</option>
-            <option value="Drama">Drama</option>
-            <option value="Fantasy">Fantasy</option>
-            <option value="Horror">Horror</option>
+            <option>All Genres</option>
+            <option>Action</option>
+            <option>Drama</option>
+            <option>Fantasy</option>
+            <option>Horror</option>
           </select>
         </div>
+
         <div className="filter-slot">
-          <label>Rating:</label>
+          <label>Rating</label>
           <select
-            value={rating}
             className="filter-dropdown"
+            value={rating}
             onChange={handleRatingChange}
           >
-            <option value="All Genres">All</option>
-            <option value="Good">Good</option>
-            <option value="Ok">Ok</option>
-            <option value="Bad">Bad</option>
+            <option>All</option>
+            <option>Good</option>
+            <option>Ok</option>
+            <option>Bad</option>
           </select>
         </div>
       </div>
+
       <div className="movies-grid">
         {filteredMovies.map((movie) => (
           <MovieCard
             movie={movie}
             key={movie.id}
-            toggleWatchlist={watchlist.includes(movie.id)}
-            isWatchlisted={isWatchlisted}
+            toggleWatchlist={toggleWatchlist}
+            isWatchlisted={watchlist.includes(movie.id)}
           />
         ))}
       </div>
